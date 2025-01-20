@@ -1,0 +1,4 @@
+{
+  "eslint.useFlatConfig": true,
+  "livePreview.defaultPreviewPath": "/playground/.nuxt/analyze/client.html"
+}
