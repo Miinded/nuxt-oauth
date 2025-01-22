@@ -5,7 +5,6 @@ import { defineNuxtRouteMiddleware, useNuxtApp, useRequestEvent, useRequestFetch
 import { useUserSession } from '#imports';
 
 export default defineNuxtRouteMiddleware(async () => {
-  console.log('eee');
   const nuxtApp = useNuxtApp();
   // Don't run on client hydration when server rendered
   if (import.meta.client && nuxtApp.isHydrating && nuxtApp.payload.serverRendered) {

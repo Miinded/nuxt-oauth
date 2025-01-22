@@ -15,7 +15,7 @@ export default eventHandler(async (event) => {
   const token = session.jwt.refreshToken;
 
   try {
-    const response = await $fetch<UserLogin>(`${config.backendUri}/auth/oauth/login`, {
+    const response = await $fetch<UserLogin>(`${config.backendUri}/auth/refreshtoken`, {
       method: 'POST',
       headers: {
         authorization: `Bearer ${token}`,

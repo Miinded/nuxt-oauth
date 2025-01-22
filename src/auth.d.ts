@@ -1,8 +1,8 @@
 declare module '#auth-utils' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  interface User {}
-
-  interface UserSession {
+  export interface User {
+    id: string;
+  }
+  export interface UserSession {
     user?: User;
     jwt?: {
       accessToken: string;
@@ -11,5 +11,14 @@ declare module '#auth-utils' {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  interface SecureSessionData {}
+  export interface SecureSessionData {}
+
+  export interface JWTToken {
+    accessToken: string;
+    refreshAccessToken: string;
+  }
+
+  export type UserLogin = JWTToken & {
+    user: User;
+  };
 }

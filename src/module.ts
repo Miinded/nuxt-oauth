@@ -1,5 +1,5 @@
-import { defineNuxtModule, createResolver, installModule, addImportsDir, addRouteMiddleware, addServerHandler, addTemplate, addServerImportsDir } from '@nuxt/kit';
-import type { ModuleOptions } from './types/nuxt-auth-utils';
+import { defineNuxtModule, createResolver, installModule, addImportsDir, addRouteMiddleware, addServerHandler, addTemplate, addServerImportsDir, addTypeTemplate } from '@nuxt/kit';
+import type { ModuleOptions } from './types/module.type';
 export * from 'nuxt-auth-utils';
 
 export default defineNuxtModule<ModuleOptions>({
@@ -56,6 +56,37 @@ export default defineNuxtModule<ModuleOptions>({
     addTemplate({
       filename: 'types/miinded-oauth.d.ts',
       getContents: () => ["declare module '#miinded-oauth/server' {", `  const useBackendOauthLogin: typeof import('${resolver.resolve('./runtime/server/services')}').useBackendOauthLogin`, '}'].join('\n'),
+    });
+    addTypeTemplate({
+      filename: 'types/miinded-auth-utils.d.ts',
+      getContents: () => /* ts */ `
+declare module '#auth-utils' {
+  interface User {
+    id: string;
+  }
+
+  interface UserSession {
+    user?: User;
+    jwt?: {
+      accessToken: string;
+      refreshToken: string;
+    };
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface SecureSessionData {}
+
+  interface JWTToken {
+    accessToken: string;
+    refreshAccessToken: string;
+  }
+
+  type UserLogin = JWTToken & {
+    user: User;
+  };
+}
+
+`,
     });
   },
 });
