@@ -1,6 +1,5 @@
-// import { getUserSession, replaceUserSession, useRuntimeConfig } from '#imports';
-import { getUserSession, replaceUserSession, useRuntimeConfig } from '#imports';
-import { eventHandler, createError } from 'h3';
+import { clearUserSession, getUserSession, replaceUserSession, useRuntimeConfig } from '#imports';
+import { eventHandler, createError, sendRedirect } from 'h3';
 import type { UserLogin } from '#auth-utils';
 
 export default eventHandler(async (event) => {
@@ -16,7 +15,7 @@ export default eventHandler(async (event) => {
 
   try {
     const response = await $fetch<UserLogin>(`${config.backendUri}/auth/refreshtoken`, {
-      method: 'POST',
+      method: 'GET',
       headers: {
         authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -35,16 +34,8 @@ export default eventHandler(async (event) => {
 
     return accessToken;
   } catch (error: any) {
-    if (error.response) {
-      throw createError({
-        statusCode: error.response?.status || 500,
-        statusMessage: error.response?._data?.message || 'Une erreur est survenue',
-      });
-    }
-
-    throw createError({
-      statusCode: 503,
-      statusMessage: 'Service unavailable',
-    });
+    console.error(error);
+    await clearUserSession(event);
+    await sendRedirect(event, '/');
   }
 });

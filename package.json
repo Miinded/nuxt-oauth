@@ -2,7 +2,15 @@
   "name": "@miinded/nuxt-oauth",
   "version": "1.2.0",
   "description": "Permet de mettre en place rapidement la connexion oauth du backend nestjs",
-  "repository": "@miinded/nuxt-oauth",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/miinded/nuxt-oauth.git"
+  },
+  "contributors": [
+    {
+      "name": "Miinded Team"
+    }
+  ],
   "license": "MIT",
   "type": "module",
   "exports": {

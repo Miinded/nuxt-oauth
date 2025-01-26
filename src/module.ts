@@ -57,6 +57,7 @@ export default defineNuxtModule<ModuleOptions>({
       filename: 'types/miinded-oauth.d.ts',
       getContents: () => ["declare module '#miinded-oauth/server' {", `  const useBackendOauthLogin: typeof import('${resolver.resolve('./runtime/server/services')}').useBackendOauthLogin`, '}'].join('\n'),
     });
+
     addTypeTemplate({
       filename: 'types/miinded-auth-utils.d.ts',
       getContents: () => /* ts */ `
