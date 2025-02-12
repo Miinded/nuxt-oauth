@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.3.0
+
+[compare changes](https://gitlab.com/miinded/nuxt-oauth/compare/v1.2.1...v1.3.0)
+
+### 🚀 Enhancements
+
+- UseQueryAuth ([7bdf52b](https://gitlab.com/miinded/nuxt-oauth/commit/7bdf52b))
+
+### 🩹 Fixes
+
+- Typo inferece ([af4c9ec](https://gitlab.com/miinded/nuxt-oauth/commit/af4c9ec))
+
+### ❤️ Contributors
+
+- Starker-xp <starker-xp@miinded.com>
+
 ## v1.2.1
 
 [compare changes](https://gitlab.com/miinded/nuxt-oauth/compare/v1.2.0...v1.2.1)

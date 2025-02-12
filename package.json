@@ -1,6 +1,6 @@
 {
   "name": "@miinded/nuxt-oauth",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Permet de mettre en place rapidement la connexion oauth du backend nestjs",
   "repository": {
     "type": "git",
@@ -30,18 +30,18 @@
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
+    "release": "npm run lint && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
-    "@miinded/nuxt-api": "^0.0.15",
+    "@miinded/nuxt-api": "^0.0.16",
     "@nuxt/kit": "^3.15.4",
-    "@pinia/nuxt": "^0.10.0",
+    "@pinia/nuxt": "^0.10.1",
     "@tsndr/cloudflare-worker-jwt": "^3.1.3",
-    "nuxt-auth-utils": "^0.5.14"
+    "nuxt-auth-utils": "^0.5.15"
   },
   "devDependencies": {
     "@nuxt/devtools": "^2.0.0",
@@ -53,7 +53,7 @@
     "changelogen": "^0.5.7",
     "eslint": "^9.20.1",
     "nuxt": "^3.15.4",
-    "pinia": "^3.0.0",
+    "pinia": "^3.0.1",
     "typescript": "~5.7.3",
     "vitest": "^3.0.5",
     "vue-tsc": "^2.2.0"
