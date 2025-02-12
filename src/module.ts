@@ -1,5 +1,6 @@
-import { defineNuxtModule, createResolver, installModule, addImportsDir, addRouteMiddleware, addServerHandler, addTemplate, addServerImportsDir, addTypeTemplate } from '@nuxt/kit';
+import { defineNuxtModule, createResolver, installModule, addImportsDir, addRouteMiddleware, addServerHandler, addServerImportsDir, addTypeTemplate } from '@nuxt/kit';
 import type { ModuleOptions } from './types/module.type';
+export * from './types/api-cache';
 export * from 'nuxt-auth-utils';
 
 export default defineNuxtModule<ModuleOptions>({
@@ -19,9 +20,11 @@ export default defineNuxtModule<ModuleOptions>({
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
 
-    addImportsDir(resolver.resolve('./runtime/composables'));
-
     await installModule('nuxt-auth-utils', {}, nuxt);
+
+    await installModule('@miinded/nuxt-api', {}, nuxt);
+
+    addImportsDir(resolver.resolve('./runtime/composables'));
 
     // Middleware
     addRouteMiddleware({
@@ -53,9 +56,15 @@ export default defineNuxtModule<ModuleOptions>({
     }
     addServerImportsDir(resolver.resolve('./runtime/server/services'));
 
-    addTemplate({
+    addTypeTemplate({
       filename: 'types/miinded-oauth.d.ts',
-      getContents: () => ["declare module '#miinded-oauth/server' {", `  const useBackendOauthLogin: typeof import('${resolver.resolve('./runtime/server/services')}').useBackendOauthLogin`, '}'].join('\n'),
+      getContents: () => `
+      declare module '#miinded-oauth/server' {
+        const useBackendOauthLogin: typeof import('${resolver.resolve('./runtime/server/services')}').useBackendOauthLogin; 
+        export * from '${resolver.resolve('./runtime/composables')}';
+      }
+      export {};
+      `,
     });
 
     addTypeTemplate({
