@@ -2,7 +2,7 @@ import type { AxiosError } from 'axios';
 import type { ApiCacheKey, UseRawQueryOnErrorAction } from '@miinded/nuxt-api';
 import { computed, toValue } from 'vue';
 import { useMutation, useUserSession } from '#imports';
-import type { UseMutationAuthOptions } from '~/src/types/api-cache';
+import type { UseMutationAuthOptions } from '../../types/api-cache';
 
 export const useMutationAuth = (key: ApiCacheKey[], options: UseMutationAuthOptions = {}) => {
   const { session, fetch: fetchSession } = useUserSession();
