@@ -1,10 +1,12 @@
 import type { AxiosError } from 'axios';
-import type { ApiCacheKey, UseRawQueryOnErrorAction } from '@miinded/nuxt-api';
+import type { ApiCacheKey, UseMutationReturn, UseRawQueryOnErrorAction } from '@miinded/nuxt-api';
 import { computed, toValue } from 'vue';
 import { useMutation, useUserSession } from '#imports';
 import type { UseMutationAuthOptions } from '../../types/api-cache';
 
-export const useMutationAuth = (key: ApiCacheKey[], options: UseMutationAuthOptions = {}) => {
+export type UseMutationReturnAuth = UseMutationReturn;
+
+export const useMutationAuth = (key: ApiCacheKey[], options: UseMutationAuthOptions = {}): UseMutationReturnAuth => {
   const { session, fetch: fetchSession } = useUserSession();
 
   const authToken = computed(() => ({
@@ -26,7 +28,7 @@ export const useMutationAuth = (key: ApiCacheKey[], options: UseMutationAuthOpti
     return 'NOTHING';
   };
 
-  const mutation = useMutation(key, {
+  const mutation: UseMutationReturn = useMutation(key, {
     ...options,
     authToken,
     onErrorCallback,
