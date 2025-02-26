@@ -10,6 +10,7 @@ export const useBackendOauthLogin = async (event: H3Event, datas: RequestInit['b
   const config = useRuntimeConfig(event);
 
   try {
+    // @todo config.miindedOauth.loginUri
     const result = await $fetch<UserLogin>(`${config.backendUri}/auth/oauth/login`, {
       method: 'POST',
       headers: {
@@ -18,6 +19,17 @@ export const useBackendOauthLogin = async (event: H3Event, datas: RequestInit['b
       },
       body: datas,
     });
+
+    if(result.user === null){
+      const body = datas as Record<string, any>; 
+      await setUserSession(event, {
+        oauth:  {
+          provider: body.provider,
+          datas: body,
+        }
+      });
+      return result;
+    }
 
     await setUserSession(event, {
       jwt: {

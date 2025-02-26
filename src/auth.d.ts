@@ -8,6 +8,10 @@ declare module '#auth-utils' {
       accessToken: string;
       refreshToken: string;
     };
+    oauth?: {
+      provider: string; 
+      datas: Record<string, any>;
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
