@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.0
+
+[compare changes](https://gitlab.com/miinded/nuxt-oauth/compare/v1.3.1...v1.4.0)
+
+### 🚀 Enhancements
+
+- Add oauth management ([0ab9c5f](https://gitlab.com/miinded/nuxt-oauth/commit/0ab9c5f))
+
+### 🩹 Fixes
+
+- Type ([65af906](https://gitlab.com/miinded/nuxt-oauth/commit/65af906))
+
+### ❤️ Contributors
+
+- Starker-xp <starker-xp@miinded.com>
+
 ## v1.3.1
 
 [compare changes](https://gitlab.com/miinded/nuxt-oauth/compare/v1.3.0...v1.3.1)
