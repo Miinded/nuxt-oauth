@@ -1,40 +1,16 @@
-import { computed, toValue, type ComputedRef, type Ref } from 'vue';
-import type { AxiosError } from 'axios';
-import { useQuery, useUserSession } from '#imports';
-import type { UseQueryAuthOptions } from '../../types/api-cache';
-import type { UseQueryReturn, UseRawQueryOnErrorAction } from '@miinded/nuxt-api';
+import type { ComputedRef, Ref } from 'vue';
+import type { ApiCacheKey, UseQueryReturn } from '@miinded/nuxt-api';
+import { useQuery } from '#imports';
+import type { UseQueryAuthOptions } from '../../types/module.type';
+import { useAuthHandler } from './useAuthHandler';
 
-export const useQueryAuth = <T>(_url: string | Ref<string> | ComputedRef<string>, key: string[], initialValue?: T, _options?: UseQueryAuthOptions<T>): UseQueryReturn<T> => {
-  const options: UseQueryAuthOptions<T> = { fetchOnMount: true, minDelay: 0, headers: {}, cacheDuration: undefined, ..._options };
-
-  const { session, fetch: fetchSession } = useUserSession();
-
-  const authToken = computed(() => ({
-    Authorization: 'Bearer ' + toValue(session).jwt.accessToken,
-  }));
-
-  const onErrorCallback = async (err: AxiosError): Promise<UseRawQueryOnErrorAction> => {
-    if (err.response) {
-      if (err.response.status === 401) {
-        // on refresh le token et on refetch
-        await $fetch('/api/session-refresh', {
-          method: 'POST',
-        });
-        await fetchSession();
-        // on lance le refresh de la query
-        return 'REFRESH' as UseRawQueryOnErrorAction;
-      }
-    }
-    return 'NOTHING' as UseRawQueryOnErrorAction;
-  };
-
-  const query: UseQueryReturn<T> = useQuery<T>(_url, key, initialValue, {
-    ...options,
-    authToken,
-    onErrorCallback,
-  });
-
-  return {
-    ...query,
-  };
+/** useQuery avec le jeton de la session et son renouvellement automatique sur 401 */
+export const useQueryAuth = <T>(
+  url: string | Ref<string> | ComputedRef<string>,
+  key: ApiCacheKey[],
+  initialValue?: T,
+  options: UseQueryAuthOptions<T> = {},
+): UseQueryReturn<T> => {
+  const { authToken, onErrorCallback } = useAuthHandler();
+  return useQuery<T>(url, key, initialValue, { ...options, authToken, onErrorCallback });
 };

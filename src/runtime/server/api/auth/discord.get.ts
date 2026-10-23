@@ -1,19 +1,17 @@
-import { defineOAuthDiscordEventHandler, sendRedirect } from '#imports';
-import { useBackendOauthLogin } from '../../services/useBackendOauthLogin';
+import { defineOAuthDiscordEventHandler } from '#imports';
+import { completeOauthLogin, failOauthLogin } from '../../services/useBackendOauthLogin';
 
 export default defineOAuthDiscordEventHandler({
   config: {
     scope: ['identify', 'guilds'],
   },
-  async onSuccess(event: any, { user }: any) {
-    await useBackendOauthLogin(event, {
+  onSuccess: (event, { user }) =>
+    completeOauthLogin(event, {
       provider: 'discord',
       identifier: user.id,
       email: '',
       givenName: '',
       familyName: '',
-    });
-
-    return sendRedirect(event, '/overview');
-  },
+    }),
+  onError: failOauthLogin,
 });

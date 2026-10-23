@@ -1,3 +1,5 @@
 {
   "extends": "../../../.nuxt/tsconfig.server.json",
+  // Tout le code serveur du module, y compris les handlers non enregistrés au prepare (fournisseurs OAuth désactivés)
+  "include": ["../../../.nuxt/types/nitro-nuxt.d.ts", "../../../.nuxt/types/nitro.d.ts", "./**/*"]
 }

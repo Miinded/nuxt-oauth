@@ -1,13 +1,7 @@
 {
   "extends": "./.nuxt/tsconfig.json",
+  "exclude": ["dist", "node_modules", "playground", "test/fixtures", "src/runtime/server"],
   "compilerOptions": {
-    "typeRoots": [
-      "./types" // Inclut le dossier `types` de votre module pour vos types personnalisés
-    ]
-  },
-  "exclude": [
-    "dist", // Exclut les fichiers de build générés
-    "node_modules", // Exclut le répertoire node_modules pour éviter la redondance
-    "playground" // Exclut un répertoire de test si nécessaire
-  ]
+    "types": ["vitest/globals"]
+  }
 }
