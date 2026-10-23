@@ -1,5 +1,32 @@
 # Changelog
 
+## 2.0.0
+
+### Major Changes
+
+- Published on npm from [GitHub](https://github.com/Miinded/nuxt-oauth) instead of the GitLab registry; ESM only.
+- Requires Nuxt 4 (`compatibility.nuxt >= 4.0.0`); `nuxt`, `vue` and `pinia` are peer dependencies.
+- The session cookie only stores the tokens and the user id; the full user is reloaded from `GET /auth/me` each time
+  the session is read (`hydrateUser`, enabled by default). Fixes sessions rejected by browsers above 4 KB.
+- `POST /api/session-refresh` answers `401` (session cleared) or `503` (backend unavailable) instead of redirecting.
+- The unused `baseUrl` option is removed.
+
+### Minor Changes
+
+- `useAuthHandler` and `useLogout` composables; `POST /api/logout` revokes the tokens on the backend.
+- `GET /api/auth/providers` lists the enabled and configured OAuth providers.
+- `protectedRoutes`, `loginPath`, `oauthFlow` (`redirect` or `popup`) and `redirectAfterLogin` options.
+- `useQueryAuth` and `useMutationAuth` accept every option of `@miinded/nuxt-api` 2 (reactive keys, `retry`).
+- `#miinded-oauth/server` alias for the server utilities.
+
+### Patch Changes
+
+- A failed token renewal no longer escapes from the request as an unhandled rejection.
+- A backend outage during navigation no longer logs the user out.
+- The renewed session cookie is forwarded once during server-side rendering (no duplicate `Set-Cookie`).
+- `cookie-es` and `axios`, imported by the runtime, are declared as dependencies.
+
+
 
 ## v1.4.0
 
